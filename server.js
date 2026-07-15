@@ -1,6 +1,7 @@
 // Declare our dependencies
 var express = require('express');
 var request = require('superagent');
+const os = require("os");
 
 // Create our express app
 var app = express();
@@ -16,7 +17,9 @@ let backend_url = process.env.BACKEND_URL || "localhost:3000"
 
 // The homepage route of our application does not interface with the MovieAnalyst API and is always accessible. We won’t use the getAccessToken middleware here. We’ll simply render the index.ejs view.
 app.get('/', function(req, res){
-  res.render('index');
+  res.render('index', {
+    hostname: os.hostname()
+  });
 })
 
 // For the movies route, we’ll call the getAccessToken middleware to ensure we have an access token. If we do have a valid access_token, we’ll make a request with the superagent library and we’ll be sure to add our access_token in an Authorization header before making the request to our API.
