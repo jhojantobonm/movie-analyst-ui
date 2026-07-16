@@ -2,6 +2,7 @@
 var express = require('express');
 var request = require('superagent');
 const os = require("os");
+const { log } = require('console');
 
 // Create our express app
 var app = express();
@@ -24,9 +25,10 @@ app.get('/', function(req, res){
     .get(`http://${backend_url}/`)
     .end(function(err, data) {
 
+        // console.dir(data.body, { depth: null, colors: true });
         res.render('index', { 
           app_hostname: os.hostname(),
-          api_hostname: data.body.api_hostname
+          api_hostname: data.body.hostname
         } );
       
     })
